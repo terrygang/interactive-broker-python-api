@@ -73,18 +73,23 @@ To create a config file using hte `configparser` module, run the script below in
 import pathlib
 from configparser import ConfigParser
 
+# Initialize a new instance of the `ConfigParser` object.
 config = ConfigParser()
 
+# Define a new section called `main`.
 config.add_section('main')
 
+# Set the values for the `main` section.
 config.set('main', 'REGULAR_ACCOUNT', 'YOUR_ACCOUNT_NUMBER')
 config.set('main', 'REGULAR_USERNAME', 'YOUR_ACCOUNT_USERNAME')
 
 config.set('main', 'PAPER_ACCOUNT', 'YOUR_ACCOUNT_NUMBER')
 config.set('main', 'PAPER_USERNAME', 'YOUR_ACCOUNT_USERNAME')
 
+# Make the `config` folder for the user.
 new_directory = pathlib.Path("config/").mkdir(parents=True, exist_ok=True)
 
+# Write the contents of the `ConfigParser` object to the `config.ini` file.
 with open('config/config.ini', 'w+') as f:
     config.write(f)
 ```
@@ -104,7 +109,11 @@ REGULAR_ACCOUNT = 'MY_ACCOUNT_NUMBER'
 REGULAR_USERNAME = 'MY_ACCOUNT_USERNAME'
 
 # Create a new session of the IB Web API.
-ib_client = IBClient(username=REGULAR_USERNAME, account=REGULAR_ACCOUNT)
+ib_client = IBClient(
+    username=REGULAR_USERNAME,
+    account=REGULAR_ACCOUNT,
+    is_server_running=True
+)
 
 # create a new session.
 ib_client.create_session()
@@ -131,9 +140,15 @@ ib_client.close_session()
 
 For certain requests, in a limited fashion, it will help validate your request when possible. For example, when grabbing real-time quotes using the `market_data` endpoint, it will validate the fields you request to ensure they're valid fields for that endpoint.
 
-## Documentation and Resources
+### Endpoint Verification
 
-### Official API Documentation
+To use certain endpoints, you must call other endpoints before you use it. To help limit the amount of confusion for users, the library will call those endpoints for you behind the scenes so that way you don't need to worry about it.
+
+### Client Portal Download
+
+If the user doesn't have the clientportal gateway downloaded, then the library will download a copy it, unzip it for you, and quickly allow you to get up and running with your scripts.
+
+## Documentation and Resources
 
 - [Getting Started](https://interactivebrokers.github.io/cpwebapi/index.html#login)
 - [Endpoints](https://interactivebrokers.com/api/doc.html)
@@ -148,4 +163,4 @@ Help support this project and future projects by donating to my [Patreon Page](h
 If you'd like to watch more of my content, feel free to visit my YouTube channel [Sigma Coding](https://www.youtube.com/c/SigmaCoding).
 
 **Hire Me:**
-If you have a project, you think I can help you with feel free to reach out at [coding.sigma@gmail.com](mailto:coding.sigma@gmail.com?subject=[GitHub]%20Project%20Proposal) or fill out the [contract request form](https://forms.office.com/Pages/ResponsePage.aspx?id=ZwOBErInsUGliXx0Yo2VfcCSWZSwW25Es3vPV2veU0pUMUs5MUc2STkzSzVQMFNDVlI5NjJVNjREUi4u)
+If you have a project, you think I can help you with feel free to reach out at [coding.sigma@gmail.com](mailto:coding.sigma@gmail.com?subject=[GitHub]%20Project%20Proposal) or fill out the [contract request form](https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAa__aAmF1hURFg5ODdaVTg1TldFVUhDVjJHWlRWRzhZRy4u)
